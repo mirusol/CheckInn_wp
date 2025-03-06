@@ -86,5 +86,4 @@ The user stories have been written following the **"As a [role], I want [feature
 
 ---
 
-### 🚀 Thank you for visiting our project! We welcome any contributions, suggestions, or feedback!
 
