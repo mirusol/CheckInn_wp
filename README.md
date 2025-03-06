@@ -73,11 +73,6 @@ Below are the key user stories for the CheckInn project, describing the major fe
 
 ---
 
-## User Stories Format
-The user stories have been written following the **"As a [role], I want [feature] so that [benefit]"** format. Each feature includes its acceptance criteria, which outlines the expected functionality and results.
-
----
-
 ## Next Steps
 - Setup and implement backend using **Spring Boot**.
 - Develop frontend interface using **Bootstrap or Flexbox**.
