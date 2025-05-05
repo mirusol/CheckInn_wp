@@ -7,6 +7,8 @@
 
 Welcome to the **CheckInn** project! This application will allow users to check in to various accommodations, manage bookings, and interact with admins to handle reservations and available resources.
 
+https://trello.com/b/bIsomPfK/projecttasks
+
 ---
 
 ## Overview
