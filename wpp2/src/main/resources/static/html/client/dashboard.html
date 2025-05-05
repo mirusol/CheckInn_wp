@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Dashboard - CheckInn</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/client.css">
+</head>
+<body>
+<header class="main-header">
+    <div class="logo">
+        <h1>Check<span>Inn</span></h1>
+    </div>
+    <nav class="main-nav">
+        <ul>
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="bookings.html">My Bookings</a></li>
+            <li><a href="../rooms.html">Browse Rooms</a></li>
+            <li><a href="../profile.html">My Profile</a></li>
+        </ul>
+    </nav>
+    <div class="user-menu">
+        <span id="username-display">Client</span>
+        <button id="logout-btn" onclick="logout()">Logout</button>
+    </div>
+</header>
+
+<main class="dashboard-container">
+    <div class="welcome-section">
+        <h1>Welcome to CheckInn, <span id="clientName">Client</span>!</h1>
+        <p>Manage your bookings and explore new accommodations from your personal dashboard.</p>
+    </div>
+
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <h3>Upcoming Stays</h3>
+            <div class="stat-value" id="upcomingStays">2</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📅</div>
+            <h3>Past Stays</h3>
+            <div class="stat-value" id="pastStays">3</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <h3>Total Spent</h3>
+            <div class="stat-value" id="totalSpent">$1,245</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🌟</div>
+            <h3>Rewards Points</h3>
+            <div class="stat-value" id="rewardsPoints">250</div>
+        </div>
+    </div>
+
+    <section class="quick-actions">
+        <h2>Quick Actions</h2>
+        <div class="action-buttons">
+            <a href="../rooms.html" class="action-btn">
+                <div class="action-icon">🔍</div>
+                <span>Find Rooms</span>
+            </a>
+            <a href="bookings.html" class="action-btn">
+                <div class="action-icon">📋</div>
+                <span>View Bookings</span>
+            </a>
+            <a href="../profile.html" class="action-btn">
+                <div class="action-icon">👤</div>
+                <span>Update Profile</span>
+            </a>
+            <a href="#" class="action-btn" id="supportBtn">
+                <div class="action-icon">💬</div>
+                <span>Contact Support</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="upcoming-bookings">
+        <div class="section-header">
+            <h2>Upcoming Stays</h2>
+            <a href="bookings.html" class="view-all">View All</a>
+        </div>
+        <div id="upcomingBookingsList" class="bookings-preview">
+            <!-- Upcoming bookings will be populated by JavaScript -->
+        </div>
+    </section>
+
+    <section class="recommended-rooms">
+        <h2>Recommended for You</h2>
+        <div class="room-cards">
+            <div class="room-card">
+                <div class="room-image placeholder-image"></div>
+                <div class="room-details">
+                    <h3>Deluxe Suite</h3>
+                    <p>Spacious suite with ocean view</p>
+                    <div class="room-price">$199 / night</div>
+                    <a href="../booking.html" class="btn-secondary">Book Now</a>
+                </div>
+            </div>
+            <div class="room-card">
+                <div class="room-image placeholder-image"></div>
+                <div class="room-details">
+                    <h3>Standard Room</h3>
+                    <p>Comfortable room with city view</p>
+                    <div class="room-price">$129 / night</div>
+                    <a href="../booking.html" class="btn-secondary">Book Now</a>
+                </div>
+            </div>
+            <div class="room-card">
+                <div class="room-image placeholder-image"></div>
+                <div class="room-details">
+                    <h3>Premium Apartment</h3>
+                    <p>Luxury apartment with all amenities</p>
+                    <div class="room-price">$259 / night</div>
+                    <a href="../booking.html" class="btn-secondary">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>CheckInn</h3>
+            <p>The best way to book your perfect accommodation.</p>
+        </div>
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../rooms.html">Rooms</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Contact Us</h3>
+            <p>Email: info@checkinn.com</p>
+            <p>Phone: +1 (555) 123-4567</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 CheckInn. Developed by Bilciurescu Elena-Alina, Solomon Miruna-Maria, Toma Daria-Maria.</p>
+    </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/client.js"></script>
+</body>
+</html>

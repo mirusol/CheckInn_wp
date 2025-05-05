@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Room - CheckInn</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/booking.css">
+</head>
+<body>
+<header class="main-header">
+    <div class="logo">
+        <h1>Check<span>Inn</span></h1>
+    </div>
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="rooms.html">Rooms</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="user-menu" id="userMenu">
+        <span id="username-display">Guest</span>
+        <button id="logout-btn" onclick="logout()">Logout</button>
+    </div>
+</header>
+
+<main class="booking-container">
+    <div class="booking-progress">
+        <div class="progress-step active">
+            <div class="step-number">1</div>
+            <div class="step-text">Room Selection</div>
+        </div>
+        <div class="progress-connector"></div>
+        <div class="progress-step">
+            <div class="step-number">2</div>
+            <div class="step-text">Your Details</div>
+        </div>
+        <div class="progress-connector"></div>
+        <div class="progress-step">
+            <div class="step-number">3</div>
+            <div class="step-text">Confirmation</div>
+        </div>
+    </div>
+
+    <div class="booking-steps">
+        <!-- Step 1: Room Selection -->
+        <div class="booking-step" id="step1">
+            <h2>Select Your Room</h2>
+            <div class="room-preview">
+                <div class="room-image placeholder-image"></div>
+                <div class="room-info">
+                    <h3 id="roomName">Deluxe Suite</h3>
+                    <p id="roomDescription">Spacious suite with ocean view and king-size bed</p>
+                    <ul class="room-amenities">
+                        <li>Free WiFi</li>
+                        <li>Air Conditioning</li>
+                        <li>Mini Bar</li>
+                        <li>Room Service</li>
+                    </ul>
+                    <div class="room-price" id="roomPrice">$199 / night</div>
+                </div>
+            </div>
+
+            <div class="date-selection">
+                <div class="form-group">
+                    <label for="checkInDate">Check-in Date</label>
+                    <input type="date" id="checkInDate" name="checkInDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="checkOutDate">Check-out Date</label>
+                    <input type="date" id="checkOutDate" name="checkOutDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="guestCount">Number of Guests</label>
+                    <select id="guestCount" name="guestCount">
+                        <option value="1">1 Guest</option>
+                        <option value="2" selected>2 Guests</option>
+                        <option value="3">3 Guests</option>
+                        <option value="4">4 Guests</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="booking-summary">
+                <h3>Booking Summary</h3>
+                <div class="summary-item">
+                    <span>Room</span>
+                    <span id="summaryRoom">Deluxe Suite</span>
+                </div>
+                <div class="summary-item">
+                    <span>Check-in</span>
+                    <span id="summaryCheckIn">Select a date</span>
+                </div>
+                <div class="summary-item">
+                    <span>Check-out</span>
+                    <span id="summaryCheckOut">Select a date</span>
+                </div>
+                <div class="summary-item">
+                    <span>Nights</span>
+                    <span id="summaryNights">0</span>
+                </div>
+                <div class="summary-item">
+                    <span>Guests</span>
+                    <span id="summaryGuests">2</span>
+                </div>
+                <div class="summary-item total">
+                    <span>Total</span>
+                    <span id="summaryTotal">$0</span>
+                </div>
+            </div>
+
+            <div class="booking-actions">
+                <a href="rooms.html" class="btn-secondary">Back to Rooms</a>
+                <button class="btn-primary" id="nextStep1">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Guest Details -->
+        <div class="booking-step" id="step2" style="display: none;">
+            <h2>Your Details</h2>
+            <div class="guest-form">
+                <div class="form-group">
+                    <label for="guestName">Full Name</label>
+                    <input type="text" id="guestName" name="guestName" required>
+                </div>
+                <div class="form-group">
+                    <label for="guestEmail">Email</label>
+                    <input type="email" id="guestEmail" name="guestEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="guestPhone">Phone</label>
+                    <input type="tel" id="guestPhone" name="guestPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="specialRequests">Special Requests (optional)</label>
+                    <textarea id="specialRequests" name="specialRequests" rows="3"></textarea>
+                </div>
+                <div class="form-group payment">
+                    <h3>Payment Details</h3>
+                    <div class="payment-method">
+                        <div class="radio-group">
+                            <input type="radio" id="payNow" name="paymentMethod" value="now" checked>
+                            <label for="payNow">Pay Now</label>
+                        </div>
+                        <div class="radio-group">
+                            <input type="radio" id="payAtProperty" name="paymentMethod" value="property">
+                            <label for="payAtProperty">Pay at Property</label>
+                        </div>
+                    </div>
+                    <div id="paymentDetails">
+                        <div class="form-group">
+                            <label for="cardNumber">Card Number</label>
+                            <input type="text" id="cardNumber" name="cardNumber" placeholder="XXXX XXXX XXXX XXXX">
+                        </div>
+                        <div class="card-details">
+                            <div class="form-group">
+                                <label for="expiryDate">Expiry Date</label>
+                                <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY">
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" name="cvv" placeholder="XXX">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="booking-actions">
+                <button class="btn-secondary" id="prevStep2">Back</button>
+                <button class="btn-primary" id="nextStep2">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Confirmation -->
+        <div class="booking-step" id="step3" style="display: none;">
+            <div class="confirmation-box">
+                <div class="confirmation-icon">✓</div>
+                <h2>Booking Confirmed!</h2>
+                <p>Your booking has been successfully confirmed. A confirmation email has been sent to your email address.</p>
+
+                <div class="confirmation-details">
+                    <h3>Booking Details</h3>
+                    <div class="detail-item">
+                        <span>Booking Reference</span>
+                        <span id="bookingReference">CHK-12345</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Room</span>
+                        <span id="confirmRoom">Deluxe Suite</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Check-in</span>
+                        <span id="confirmCheckIn">May 15, 2025</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Check-out</span>
+                        <span id="confirmCheckOut">May 18, 2025</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Guests</span>
+                        <span id="confirmGuests">2</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Total Paid</span>
+                        <span id="confirmTotal">$597</span>
+                    </div>
+                </div>
+
+                <div class="booking-actions">
+                    <a href="client/dashboard.html" class="btn-secondary">Go to Dashboard</a>
+                    <a href="client/bookings.html" class="btn-primary">View All Bookings</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>CheckInn</h3>
+            <p>The best way to book your perfect accommodation.</p>
+        </div>
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="rooms.html">Rooms</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Contact Us</h3>
+            <p>Email: info@checkinn.com</p>
+            <p>Phone: +1 (555) 123-4567</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 CheckInn. Developed by Bilciurescu Elena-Alina, Solomon Miruna-Maria, Toma Daria-Maria.</p>
+    </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/booking.js"></script>
+</body>
+</html>
