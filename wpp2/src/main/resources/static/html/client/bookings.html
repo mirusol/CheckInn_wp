@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - CheckInn</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/client.css">
+</head>
+<body>
+<header class="main-header">
+    <div class="logo">
+        <h1>Check<span>Inn</span></h1>
+    </div>
+    <nav class="main-nav">
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="bookings.html" class="active">My Bookings</a></li>
+            <li><a href="../rooms.html">Browse Rooms</a></li>
+            <li><a href="../profile.html">My Profile</a></li>
+        </ul>
+    </nav>
+    <div class="user-menu">
+        <span id="username-display">Client</span>
+        <button id="logout-btn" onclick="logout()">Logout</button>
+    </div>
+</header>
+
+<main class="dashboard-container">
+    <h1>My Bookings</h1>
+
+    <div class="bookings-filter-bar">
+        <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">All Bookings</button>
+            <button class="filter-tab" data-filter="upcoming">Upcoming</button>
+            <button class="filter-tab" data-filter="completed">Completed</button>
+            <button class="filter-tab" data-filter="cancelled">Cancelled</button>
+        </div>
+        <div class="search-box">
+            <input type="text" id="bookingSearch" placeholder="Search bookings...">
+            <button id="searchBtn">🔍</button>
+        </div>
+    </div>
+
+    <div id="bookings-list" class="booking-list">
+        <!-- Bookings will be populated by JavaScript -->
+    </div>
+
+    <!-- Booking Details Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Booking Details</h2>
+            <div class="booking-details-content">
+                <div class="booking-details-header">
+                    <div class="booking-room-image placeholder-image"></div>
+                    <div class="booking-room-info">
+                        <h3 id="modalRoomName">Deluxe Suite</h3>
+                        <div id="modalBookingStatus" class="booking-status status-confirmed">Confirmed</div>
+                        <div id="modalBookingReference" class="booking-reference">Booking Ref: CHK-12345</div>
+                    </div>
+                </div>
+
+                <div class="booking-details-body">
+                    <div class="details-section">
+                        <h4>Stay Information</h4>
+                        <div class="detail-item">
+                            <span>Check-in</span>
+                            <span id="modalCheckIn">May 15, 2025</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Check-out</span>
+                            <span id="modalCheckOut">May 18, 2025</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Nights</span>
+                            <span id="modalNights">3</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Guests</span>
+                            <span id="modalGuests">2</span>
+                        </div>
+                    </div>
+
+                    <div class="details-section">
+                        <h4>Payment Details</h4>
+                        <div class="detail-item">
+                            <span>Room Rate</span>
+                            <span id="modalRoomRate">$199 / night</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Total</span>
+                            <span id="modalTotal">$597</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Payment Method</span>
+                            <span id="modalPaymentMethod">Credit Card (**** 1234)</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Payment Status</span>
+                            <span id="modalPaymentStatus">Paid</span>
+                        </div>
+                    </div>
+
+                    <div class="details-section">
+                        <h4>Special Requests</h4>
+                        <p id="modalSpecialRequests">No special requests.</p>
+                    </div>
+                </div>
+
+                <div class="booking-details-actions">
+                    <button id="printBooking" class="btn-secondary">Print</button>
+                    <button id="cancelBooking" class="btn-secondary cancel-btn">Cancel Booking</button>
+                    <button id="modifyBooking" class="btn-primary">Modify Booking</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>CheckInn</h3>
+            <p>The best way to book your perfect accommodation.</p>
+        </div>
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../rooms.html">Rooms</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Contact Us</h3>
+            <p>Email: info@checkinn.com</p>
+            <p>Phone: +1 (555) 123-4567</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 CheckInn. Developed by Bilciurescu Elena-Alina, Solomon Miruna-Maria, Toma Daria-Maria.</p>
+    </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/client.js"></script>
+</body>
+</html>

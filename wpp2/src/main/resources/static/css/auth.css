@@ -1,0 +1,147 @@
+/* Authentication pages styling for CheckInn */
+
+/* Define local variables if not already available from style.css */
+:root {
+    --primary-color: #4a90e2;
+    --primary-dark: #3a7bc8;
+    --border-color: #ddd;
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+}
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../images/hotel-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+}
+
+.auth-form-container {
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form-container .logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.auth-form-container .logo h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0;
+}
+
+.auth-form-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+}
+
+.auth-links {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.auth-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 12px 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.demo-credentials {
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    font-size: 14px;
+    border-left: 3px solid var(--primary-color);
+}
+
+.demo-credentials h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #555;
+}
+
+.demo-credentials p {
+    margin: 5px 0;
+    color: #666;
+}
+
+/* Responsiveness */
+@media (max-width: 576px) {
+    .auth-form-container {
+        padding: 25px;
+    }
+
+    .auth-form-container .logo h1 {
+        font-size: 2rem;
+    }
+}

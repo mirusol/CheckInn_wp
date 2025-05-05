@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rooms - CheckInn</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/rooms.css">
+</head>
+<body>
+<header class="main-header">
+    <div class="logo">
+        <h1>Check<span>Inn</span></h1>
+    </div>
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="rooms.html" class="active">Rooms</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="auth-buttons" id="authSection">
+        <a href="login.html" class="btn-secondary">Login</a>
+        <a href="register.html" class="btn-primary">Register</a>
+    </div>
+</header>
+
+<main class="rooms-container">
+    <section class="search-section">
+        <h1>Find Your Perfect Room</h1>
+        <div class="search-filters">
+            <div class="filter-group">
+                <label for="checkIn">Check In</label>
+                <input type="date" id="checkIn" name="checkIn">
+            </div>
+            <div class="filter-group">
+                <label for="checkOut">Check Out</label>
+                <input type="date" id="checkOut" name="checkOut">
+            </div>
+            <div class="filter-group">
+                <label for="guests">Guests</label>
+                <select id="guests" name="guests">
+                    <option value="1">1 Guest</option>
+                    <option value="2" selected>2 Guests</option>
+                    <option value="3">3 Guests</option>
+                    <option value="4">4 Guests</option>
+                    <option value="5">5+ Guests</option>
+                </select>
+            </div>
+            <button id="searchButton" class="btn-primary">Search</button>
+        </div>
+    </section>
+
+    <section class="filter-options">
+        <div class="options-container">
+            <div class="option-group">
+                <label for="priceRange">Price Range</label>
+                <select id="priceRange" name="priceRange">
+                    <option value="all">All Prices</option>
+                    <option value="budget">Budget ($50-$100)</option>
+                    <option value="standard">Standard ($100-$200)</option>
+                    <option value="luxury">Luxury ($200+)</option>
+                </select>
+            </div>
+            <div class="option-group">
+                <label for="roomType">Room Type</label>
+                <select id="roomType" name="roomType">
+                    <option value="all">All Types</option>
+                    <option value="standard">Standard Room</option>
+                    <option value="deluxe">Deluxe Room</option>
+                    <option value="suite">Suite</option>
+                    <option value="apartment">Apartment</option>
+                </select>
+            </div>
+            <div class="option-group">
+                <label for="amenities">Amenities</label>
+                <select id="amenities" name="amenities">
+                    <option value="all">All Amenities</option>
+                    <option value="wifi">Free WiFi</option>
+                    <option value="breakfast">Breakfast Included</option>
+                    <option value="pool">Swimming Pool</option>
+                    <option value="parking">Free Parking</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <section class="room-listings">
+        <h2>Available Rooms</h2>
+        <div id="roomsList" class="rooms-grid">
+            <!-- Rooms will be populated by JavaScript -->
+            <div class="loading">Loading rooms...</div>
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>CheckInn</h3>
+            <p>The best way to book your perfect accommodation.</p>
+        </div>
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="rooms.html">Rooms</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Contact Us</h3>
+            <p>Email: info@checkinn.com</p>
+            <p>Phone: +1 (555) 123-4567</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 CheckInn. Developed by Bilciurescu Elena-Alina, Solomon Miruna-Maria, Toma Daria-Maria.</p>
+    </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/rooms.js"></script>
+</body>
+</html>
