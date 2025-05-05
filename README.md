@@ -16,6 +16,12 @@ https://trello.com/b/bIsomPfK/projecttasks
 
 ---
 
+## Figma prototype
+https://www.figma.com/proto/DRG4qjbZIfSmo3id01BZCf/Untitled?node-id=0-1&t=jCiBZdVP5N32wa7P-1
+
+---
+
+
 ## Features
 Below are the key user stories for the CheckInn project, describing the major features:
 
