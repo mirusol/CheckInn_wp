@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheckInn - Book Room</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container mt-4">
+    <!-- Alert Messages -->
+    <div th:if="${successMessage}" class="alert alert-success" role="alert">
+        <span th:text="${successMessage}"></span>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <h1 class="mb-4">Book Room</h1>
+
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Booking Form -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Booking Details</h3>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/rooms/{roomId}/book(roomId=${room.id})}" method="post" th:object="${bookingDTO}">
+                        <input type="hidden" th:field="*{roomId}">
+
+                        <div class="form-group">
+                            <label for="checkInDate">Check-in Date</label>
+                            <input type="date" class="form-control" id="checkInDate" th:field="*{checkInDate}" required>
+                            <div class="text-danger" th:if="${#fields.hasErrors('checkInDate')}" th:errors="*{checkInDate}"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="checkOutDate">Check-out Date</label>
+                            <input type="date" class="form-control" id="checkOutDate" th:field="*{checkOutDate}" required>
+                            <div class="text-danger" th:if="${#fields.hasErrors('checkOutDate')}" th:errors="*{checkOutDate}"></div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Confirm Booking</button>
+                        <a th:href="@{/rooms/{id}(id=${room.id})}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <!-- Room Summary Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Room Summary</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Display primary image if exists, otherwise placeholder -->
+                    <img th:if="${!room.images.isEmpty()}" th:src="${room.images[0].filePath}" class="card-img-top mb-3" alt="Room Image">
+                    <img th:if="${room.images.isEmpty()}" src="https://via.placeholder.com/300x200?text=No+Image" class="card-img-top mb-3" alt="Room Placeholder">
+
+                    <h5 class="card-title" th:text="${room.name}">Room Name</h5>
+                    <p class="card-text" th:text="${room.type}">Room Type</p>
+                    <p class="card-text">Capacity: <span th:text="${room.capacity}"></span> guests</p>
+                    <p class="card-text"><strong th:text="${'$' + room.pricePerNight + ' per night'}">$100 per night</strong></p>
+                </div>
+            </div>
+
+            <!-- Pricing Calculator Card -->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h3>Pricing Details</h3>
+                </div>
+                <div class="card-body">
+                    <div id="pricingDetails">
+                        <p>Please select both check-in and check-out dates to calculate the total price.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script th:inline="javascript">
+    // Get room price from Thymeleaf
+    const pricePerNight = [[${room.pricePerNight}]];
+
+    // Set minimum date for check-in and check-out to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('checkInDate').min = today;
+    document.getElementById('checkOutDate').min = today;
+
+    // Set check-out date minimum to check-in date when check-in changes
+    document.getElementById('checkInDate').addEventListener('change', function() {
+        document.getElementById('checkOutDate').min = this.value;
+
+        // If check-out is before check-in, update it
+        if (document.getElementById('checkOutDate').value < this.value) {
+            document.getElementById('checkOutDate').value = this.value;
+        }
+
+        calculatePrice();
+    });
+
+    // Calculate price when check-out date changes
+    document.getElementById('checkOutDate').addEventListener('change', function() {
+        calculatePrice();
+    });
+
+    // Function to calculate the total price
+    function calculatePrice() {
+        const checkInDate = new Date(document.getElementById('checkInDate').value);
+        const checkOutDate = new Date(document.getElementById('checkOutDate').value);
+
+        // Only calculate if both dates are valid
+        if (!isNaN(checkInDate.getTime()) && !isNaN(checkOutDate.getTime())) {
+            // Calculate the difference in days
+            const timeDiff = checkOutDate.getTime() - checkInDate.getTime();
+            const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+            if (nights > 0) {
+                const totalPrice = nights * pricePerNight;
+
+                document.getElementById('pricingDetails').innerHTML = `
+                        <p><strong>Price per night:</strong> $${pricePerNight}</p>
+                        <p><strong>Number of nights:</strong> ${nights}</p>
+                        <p class="font-weight-bold">Total price: $${totalPrice.toFixed(2)}</p>
+                    `;
+            } else {
+                document.getElementById('pricingDetails').innerHTML = `
+                        <p class="text-danger">Check-out date must be after check-in date.</p>
+                    `;
+            }
+        } else {
+            document.getElementById('pricingDetails').innerHTML = `
+                    <p>Please select both check-in and check-out dates to calculate the total price.</p>
+                `;
+        }
+    }
+
+    // Calculate price on page load if dates are already set
+    window.addEventListener('load', calculatePrice);
+</script>
+</body>
+</html>

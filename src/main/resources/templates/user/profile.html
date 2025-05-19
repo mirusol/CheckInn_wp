@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheckInn - My Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container mt-4">
+    <!-- Alert Messages -->
+    <div th:if="${successMessage}" class="alert alert-success" role="alert">
+        <span th:text="${successMessage}"></span>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <!-- User Profile Card -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>My Profile</h3>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${user.name}">User Name</h5>
+                    <p class="card-text" th:text="${user.email}">user@example.com</p>
+                    <p class="card-text">
+                        <span class="badge badge-primary" th:if="${user.role == 'ROLE_USER'}">User</span>
+                        <span class="badge badge-danger" th:if="${user.role == 'ROLE_ADMIN'}">Admin</span>
+                    </p>
+                    <p class="card-text">Account Status:
+                        <span class="badge badge-success" th:if="${user.active}">Active</span>
+                        <span class="badge badge-danger" th:unless="${user.active}">Inactive</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Quick Links Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Quick Links</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a th:href="@{/user/bookings}">My Bookings</a>
+                        </li>
+                        <li class="list-group-item" th:if="${user.role == 'ROLE_ADMIN'}">
+                            <a th:href="@{/admin/users}">Manage Users</a>
+                        </li>
+                        <li class="list-group-item" th:if="${user.role == 'ROLE_ADMIN'}">
+                            <a th:href="@{/admin/rooms}">Manage Rooms</a>
+                        </li>
+                        <li class="list-group-item" th:if="${user.role == 'ROLE_ADMIN'}">
+                            <a th:href="@{/admin/bookings}">Manage Bookings</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <!-- Edit Profile Form -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Edit Profile</h3>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/user/profile}" method="post" th:object="${user}">
+                        <input type="hidden" th:field="*{id}">
+                        <input type="hidden" th:field="*{email}">
+                        <input type="hidden" th:field="*{role}">
+                        <input type="hidden" th:field="*{active}">
+
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" th:field="*{name}" required>
+                            <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">New Password (leave blank to keep current)</label>
+                            <input type="password" class="form-control" id="password" th:field="*{password}">
+                            <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
