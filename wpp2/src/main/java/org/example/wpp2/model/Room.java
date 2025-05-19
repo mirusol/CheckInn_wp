@@ -1,86 +1,47 @@
-package org.example.wpp2.model;
+package org.example.model;
+
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "rooms")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Room {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "room_number", nullable = false, unique = true)
-    private String roomNumber;
-
-    @Column(name = "room_type", nullable = false)
-    private String roomType;
+    @Column(nullable = false)
+    private String name;
 
     @Column(nullable = false)
-    private BigDecimal price;
+    private String type;
+
+    @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
+    private BigDecimal pricePerNight;
 
     @Column(nullable = false)
     private Integer capacity;
 
-    private String description;
-
     @Column(nullable = false)
-    private String status = "available";
+    private boolean available = true;
 
-    // Getters and setters
-    public Long getId() {
-        return id;
-    }
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RoomImage> images = new ArrayList<>();
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getRoomNumber() {
-        return roomNumber;
-    }
-
-    public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-
-    public String getRoomType() {
-        return roomType;
-    }
-
-    public void setRoomType(String roomType) {
-        this.roomType = roomType;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Integer getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private List<Booking> bookings = new ArrayList<>();
 }

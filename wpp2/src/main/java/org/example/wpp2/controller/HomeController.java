@@ -1,26 +1,25 @@
-package org.example.wpp2.controller;
+package org.example.controller;
 
+import org.example.model.Room;
+import org.example.service.RoomService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Controller
 public class HomeController {
 
+    @Autowired
+    private RoomService roomService;
+
     @GetMapping("/")
-    public String home() {
-        // Redirect to admin dashboard
-        return "redirect:/html/admin/dashboard.html";
+    public String home(Model model) {
+        List<Room> featuredRooms = roomService.getAvailableRooms();
+        model.addAttribute("featuredRooms", featuredRooms);
+        return "home";
     }
 
-    @GetMapping("/admin")
-    public String admin() {
-        // Redirect to admin dashboard
-        return "redirect:/html/admin/dashboard.html";
-    }
-
-    // Handle error page - redirect to admin dashboard
-    @GetMapping("/error")
-    public String handleError() {
-        return "redirect:/html/admin/dashboard.html";
-    }
 }

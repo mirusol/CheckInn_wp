@@ -1,43 +1,32 @@
-package org.example.wpp2.model;
+package org.example.model;
+
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "room_images")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RoomImage {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @Column(nullable = false)
+    private String filename;
+
+    @Column(nullable = false)
+    private String filePath;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
-    @Column(name = "image_path", nullable = false)
-    private String imagePath;
-
-    // Getters and setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
+    @Column(nullable = false)
+    private boolean isPrimary = false;
 }

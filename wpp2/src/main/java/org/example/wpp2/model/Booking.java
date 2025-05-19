@@ -1,126 +1,45 @@
-package org.example.wpp2.model;
+package org.example.model;
+
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "bookings")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Booking {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
-    @Column(name = "check_in_date", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date checkInDate;
-
-    @Column(name = "check_out_date", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date checkOutDate;
+    @Column(nullable = false)
+    private LocalDate checkInDate;
 
     @Column(nullable = false)
-    private Integer guests;
+    private LocalDate checkOutDate;
 
-    @Column(name = "total_price", nullable = false)
+    @Column(nullable = false)
     private BigDecimal totalPrice;
 
     @Column(nullable = false)
-    private String status = "pending";
+    private String status = "PENDING"; // PENDING, CONFIRMED, CANCELLED
 
-    @Column(name = "special_requests")
-    private String specialRequests;
-
-    @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
-
-    // Getters and setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-    public Date getCheckInDate() {
-        return checkInDate;
-    }
-
-    public void setCheckInDate(Date checkInDate) {
-        this.checkInDate = checkInDate;
-    }
-
-    public Date getCheckOutDate() {
-        return checkOutDate;
-    }
-
-    public void setCheckOutDate(Date checkOutDate) {
-        this.checkOutDate = checkOutDate;
-    }
-
-    public Integer getGuests() {
-        return guests;
-    }
-
-    public void setGuests(Integer guests) {
-        this.guests = guests;
-    }
-
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getSpecialRequests() {
-        return specialRequests;
-    }
-
-    public void setSpecialRequests(String specialRequests) {
-        this.specialRequests = specialRequests;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
+    @Column(nullable = false)
+    private LocalDate bookingDate = LocalDate.now();
 }
