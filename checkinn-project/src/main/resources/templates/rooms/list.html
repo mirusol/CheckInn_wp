@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheckInn - Rooms</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container mt-4">
+    <!-- Alert Messages -->
+    <div th:if="${successMessage}" class="alert alert-success" role="alert">
+        <span th:text="${successMessage}"></span>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <h1 class="mb-4">Available Rooms</h1>
+
+    <!-- Search Form -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>Find Available Rooms</h3>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/rooms}" method="get">
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="checkIn">Check-in Date</label>
+                        <input type="date" class="form-control" id="checkIn" name="checkIn" th:value="${checkIn}" required>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="checkOut">Check-out Date</label>
+                        <input type="date" class="form-control" id="checkOut" name="checkOut" th:value="${checkOut}" required>
+                    </div>
+                    <div class="form-group col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Display search parameters if present -->
+    <div class="alert alert-info" th:if="${checkIn != null && checkOut != null}">
+        <span>Showing rooms available from <strong th:text="${#temporals.format(checkIn, 'MMMM dd, yyyy')}"></strong> to <strong th:text="${#temporals.format(checkOut, 'MMMM dd, yyyy')}"></strong></span>
+    </div>
+
+    <!-- No rooms found message -->
+    <div class="alert alert-warning" th:if="${#lists.isEmpty(rooms)}">
+        <h4 class="alert-heading">No available rooms found!</h4>
+        <p>Please try different dates or check back later.</p>
+    </div>
+
+    <!-- Room Cards -->
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="room : ${rooms}">
+            <div class="card h-100">
+                <!-- Display primary image if exists, otherwise placeholder -->
+                <img th:if="${!room.images.isEmpty()}" th:src="${room.images[0].filePath}" class="card-img-top" alt="Room Image" style="height: 200px; object-fit: cover;">
+                <img th:if="${room.images.isEmpty()}" src="https://via.placeholder.com/300x200?text=No+Image" class="card-img-top" alt="Room Placeholder">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${room.name}">Room Name</h5>
+                    <p class="card-text" th:text="${room.type}">Room Type</p>
+                    <p class="card-text" th:text="${room.description}">Room Description</p>
+                    <p class="card-text">Capacity: <span th:text="${room.capacity}"></span> guests</p>
+                    <p class="card-text"><strong th:text="${'$' + room.pricePerNight + ' per night'}">$100 per night</strong></p>
+                </div>
+                <div class="card-footer">
+                    <a th:href="@{/rooms/{id}(id=${room.id})}" class="btn btn-info">View Details</a>
+                    <a th:href="@{/rooms/{id}/book(id=${room.id}, checkIn=${checkIn}, checkOut=${checkOut})}" class="btn btn-primary">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Set minimum date for check-in and check-out to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('checkIn').min = today;
+    document.getElementById('checkOut').min = today;
+
+    // Set check-out date minimum to check-in date when check-in changes
+    document.getElementById('checkIn').addEventListener('change', function() {
+        document.getElementById('checkOut').min = this.value;
+
+        // If check-out is before check-in, update it
+        if (document.getElementById('checkOut').value < this.value) {
+            document.getElementById('checkOut').value = this.value;
+        }
+    });
+</script>
+</body>
+</html>
