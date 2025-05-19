@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheckInn - Booking Confirmation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container mt-4">
+    <!-- Alert Messages -->
+    <div th:if="${successMessage}" class="alert alert-success" role="alert">
+        <span th:text="${successMessage}"></span>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-success text-white">
+            <h1 class="mb-0">Booking Confirmed!</h1>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3>Booking Details</h3>
+                    <table class="table">
+                        <tr>
+                            <th>Booking ID:</th>
+                            <td th:text="${booking.id}"></td>
+                        </tr>
+                        <tr>
+                            <th>Room:</th>
+                            <td th:text="${booking.room.name}"></td>
+                        </tr>
+                        <tr>
+                            <th>Check-in Date:</th>
+                            <td th:text="${#temporals.format(booking.checkInDate, 'MMMM dd, yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>Check-out Date:</th>
+                            <td th:text="${#temporals.format(booking.checkOutDate, 'MMMM dd, yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>Total Price:</th>
+                            <td th:text="${'$' + booking.totalPrice}"></td>
+                        </tr>
+                        <tr>
+                            <th>Status:</th>
+                            <td>
+                                <span class="badge badge-warning" th:if="${booking.status == 'PENDING'}">Pending</span>
+                                <span class="badge badge-success" th:if="${booking.status == 'CONFIRMED'}">Confirmed</span>
+                                <span class="badge badge-danger" th:if="${booking.status == 'CANCELLED'}">Cancelled</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Booking Date:</th>
+                            <td th:text="${#temporals.format(booking.bookingDate, 'MMMM dd, yyyy')}"></td>
+                        </tr>
+                    </table>
+
+                    <div class="alert alert-info">
+                        <p>Your booking has been received. Please note that it is currently in <strong>PENDING</strong> status and will be reviewed by our staff. You will receive confirmation shortly.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <!-- Room Summary Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Room Details</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- Display primary image if exists, otherwise placeholder -->
+                            <img th:if="${!booking.room.images.isEmpty()}" th:src="${booking.room.images[0].filePath}" class="card-img-top mb-3" alt="Room Image">
+                            <img th:if="${booking.room.images.isEmpty()}" src="https://via.placeholder.com/300x200?text=No+Image" class="card-img-top mb-3" alt="Room Placeholder">
+
+                            <h5 class="card-title" th:text="${booking.room.name}">Room Name</h5>
+                            <p class="card-text" th:text="${booking.room.type}">Room Type</p>
+                            <p class="card-text">Capacity: <span th:text="${booking.room.capacity}"></span> guests</p>
+                            <p class="card-text"><strong th:text="${'$' + booking.room.pricePerNight + ' per night'}">$100 per night</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a th:href="@{/user/bookings}" class="btn btn-primary">View All Bookings</a>
+                <a th:href="@{/}" class="btn btn-secondary">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
