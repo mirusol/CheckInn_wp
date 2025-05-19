@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<footer th:fragment="footer" class="bg-dark text-white mt-5 py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>CheckInn</h5>
+                <p>Find the perfect accommodations for your stay.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a class="text-white" th:href="@{/static}">Home</a></li>
+                    <li><a class="text-white" th:href="@{/templates/rooms}">Rooms</a></li>
+                    <li><a class="text-white" th:href="@{/about}">About</a></li>
+                    <li><a class="text-white" th:href="@{/contact}">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Contact Us</h5>
+                <address>
+                    <p>123 Hotel Street<br>
+                        Cityname, State 12345<br>
+                        <a class="text-white" href="mailto:info@checkinn.com">info@checkinn.com</a><br>
+                        <a class="text-white" href="tel:+11234567890">(123) 456-7890</a></p>
+                </address>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col text-center">
+                <p>&copy; <span th:text="${#dates.year(#dates.createNow())}">2025</span> CheckInn. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

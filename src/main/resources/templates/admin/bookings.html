@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheckInn - Admin Bookings</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container mt-4">
+    <!-- Alert Messages -->
+    <div th:if="${successMessage}" class="alert alert-success" role="alert">
+        <span th:text="${successMessage}"></span>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <h1 class="mb-4">Manage Bookings</h1>
+
+    <!-- Filter Options -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>Filter Bookings</h3>
+        </div>
+        <div class="card-body">
+            <div class="btn-group mb-3" role="group">
+                <button type="button" class="btn btn-outline-primary" onclick="filterBookings('all')">All</button>
+                <button type="button" class="btn btn-outline-warning" onclick="filterBookings('pending')">Pending</button>
+                <button type="button" class="btn btn-outline-success" onclick="filterBookings('confirmed')">Confirmed</button>
+                <button type="button" class="btn btn-outline-danger" onclick="filterBookings('cancelled')">Cancelled</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bookings Table -->
+    <table class="table table-striped" id="bookingsTable">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Room</th>
+            <th>Check-in</th>
+            <th>Check-out</th>
+            <th>Total Price</th>
+            <th>Status</th>
+            <th>Booking Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="booking : ${bookings}" th:attr="data-status=${booking.status.toLowerCase()}">
+            <td th:text="${booking.id}"></td>
+            <td th:text="${booking.user.name + ' (' + booking.user.email + ')'}"></td>
+            <td th:text="${booking.room.name}"></td>
+            <td th:text="${#temporals.format(booking.checkInDate, 'MMM dd, yyyy')}"></td>
+            <td th:text="${#temporals.format(booking.checkOutDate, 'MMM dd, yyyy')}"></td>
+            <td th:text="${'$' + booking.totalPrice}"></td>
+            <td>
+                <span class="badge badge-warning" th:if="${booking.status == 'PENDING'}">Pending</span>
+                <span class="badge badge-success" th:if="${booking.status == 'CONFIRMED'}">Confirmed</span>
+                <span class="badge badge-danger" th:if="${booking.status == 'CANCELLED'}">Cancelled</span>
+            </td>
+            <td th:text="${#temporals.format(booking.bookingDate, 'MMM dd, yyyy')}"></td>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <form th:if="${booking.status == 'PENDING'}" th:action="@{/admin/bookings/{id}/status(id=${booking.id}, status='CONFIRMED')}" method="post">
+                            <button type="submit" class="dropdown-item">Confirm</button>
+                        </form>
+                        <form th:if="${booking.status == 'CONFIRMED'}" th:action="@{/admin/bookings/{id}/status(id=${booking.id}, status='PENDING')}" method="post">
+                            <button type="submit" class="dropdown-item">Set to Pending</button>
+                        </form>
+                        <form th:if="${booking.status != 'CANCELLED'}" th:action="@{/admin/bookings/{id}/status(id=${booking.id}, status='CANCELLED')}" method="post">
+                            <button type="submit" class="dropdown-item">Cancel</button>
+                        </form>
+                        <a th:href="@{/booking/confirmation/{id}(id=${booking.id})}" class="dropdown-item">View Details</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    function filterBookings(status) {
+        const rows = document.querySelectorAll('#bookingsTable tbody tr');
+
+        rows.forEach(row => {
+            if (status === 'all' || row.getAttribute('data-status') === status) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+</script>
+</body>
+</html>
